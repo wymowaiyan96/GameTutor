@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//hello son
+//hello son this is wymo
 public class SpawnTiles : MonoBehaviour {
 
     private int amtTilesOnScreen = 5; //how many tiles to create
