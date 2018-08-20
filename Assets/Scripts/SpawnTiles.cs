@@ -5,7 +5,7 @@ using UnityEngine;
 //hello son this is wymo
 public class SpawnTiles : MonoBehaviour {
 
-    private int amtTilesOnScreen = 5; //how many tiles to create
+    private int amtTilesOnScreen = 3; //how many tiles to create
     public GameObject[] TilePrefabs; //no of idfferent prefabs
     public static  Transform playerTransform; //current player position
     private float tileLength = 22.0f; //lenght of each prefab tile

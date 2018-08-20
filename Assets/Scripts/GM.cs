@@ -26,16 +26,16 @@ public class GM : MonoBehaviour {
         timeTotal += Time.deltaTime;
 
 
-        if (levelCompStatus == "Fail")
-        {
-           // greater than 2 seconds
-            weightToLoad += Time.deltaTime;
-        }
+        //if (levelCompStatus == "Fail")
+        //{
+        //   // greater than 2 seconds
+        //    weightToLoad += Time.deltaTime;
+        //}
 
-        //checking game is over
-        if (weightToLoad>2)
-        {
-            SceneManager.LoadScene("LevelComp");
-        }
+        ////checking game is over
+        //if (weightToLoad>2)
+        //{
+        //    SceneManager.LoadScene("LevelComp");
+        //}
 	}
 }

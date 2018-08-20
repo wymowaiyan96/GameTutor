@@ -12,11 +12,13 @@ public class PlayerMovement : MonoBehaviour
     private float gravity = 12.0f;
     private float animationDuration = 2.0f;
     private bool isDead = false; //not dead when start
+    private float startTime;
 
     // Use this for initialization
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        startTime = Time.time;
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         if (isDead)
             return;
         //restricting control. only after camera animation, player can move
-        if (Time.time < animationDuration)
+        if (Time.time - startTime < animationDuration)
         //{
         //    controller.Move(Vector3.forward * speed * Time.deltaTime);
         //    return;
@@ -64,22 +66,13 @@ public class PlayerMovement : MonoBehaviour
     //called when the player hit something
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        //if collide with something infront z
-        if (hit.point.z > transform.position.z + controller.radius)
+        //if collide with an obstacles
+        if (hit.gameObject.tag == "lethal")
         {
             Death();
-        }
-    }
+        }       
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Coin(Clone)")
-        {
-            Destroy(other.gameObject);
-            GM.coinTotal += 1; //coin score count incremented here
-
-        }
-    }
+    }  
 
     private void Death()
     {

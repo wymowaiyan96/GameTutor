@@ -12,6 +12,8 @@ public class Score : MonoBehaviour {
     private int scoreToNextLev = 10;
     private bool isDead = false;
 
+    public DeadMenu deathMenu;
+
     
 	
 	// Update is called once per frame
@@ -45,5 +47,13 @@ public class Score : MonoBehaviour {
     public void OnDeath()
     {
         isDead = true;
+
+        //if highscore is registry is less than current higher score
+        if (PlayerPrefs.GetFloat("HighScore") < score)
+        {
+            PlayerPrefs.SetFloat("HighScore", score);  //Storing the current score
+        }
+      
+        deathMenu.ToggleEndMenu(score);
     }
 }
