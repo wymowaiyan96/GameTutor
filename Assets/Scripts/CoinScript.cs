@@ -17,7 +17,7 @@ public class CoinScript : MonoBehaviour {
             transform.Rotate(3, 0, 0);
         }
 
-        if (gameObject.name == "Coin(Clone)")
+        if (gameObject.CompareTag("coin"))
         {
             transform.Rotate(0, 0, 3);
         }

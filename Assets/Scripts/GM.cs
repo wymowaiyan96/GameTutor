@@ -14,6 +14,7 @@ public class GM : MonoBehaviour {
     public float zScenePos = 58; //z Scene Position
     public int randNum;
 
+    public Transform boomObj;
 	// Use this for initialization
 	void Start () {
       

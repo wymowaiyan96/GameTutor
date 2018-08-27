@@ -13,6 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private float animationDuration = 2.0f;
     private bool isDead = false; //not dead when start
     private float startTime;
+    private float jumpSpeed = 0.0f; //jump speed
+
+    bool speedFlag = true; //flag for speed candy
+
+    private float waitTime = 0.0f;
+
+    public Transform boomObj;
 
     // Use this for initialization
     void Start()
@@ -39,7 +46,6 @@ public class PlayerMovement : MonoBehaviour
         {
             vertVelocity = -0.5f;
         }
-
         else
         {
             vertVelocity -= gravity * Time.deltaTime;
@@ -52,9 +58,30 @@ public class PlayerMovement : MonoBehaviour
 
         //Y UP and Down
         moveVector.y = vertVelocity;
+        //if (moveVector.y < 2.0f)
+        //{
+            if (Input.GetButton("Jump"))
+                moveVector.y = jumpSpeed;
+        //}
 
-        //Z forward and background 
+
+        // Z forward and background
         controller.Move(moveVector * Time.deltaTime);
+
+
+        //if (controller.isGrounded)
+        //{
+        //    moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //    moveVector = transform.TransformDirection(moveVector);
+        //    moveVector *= speed;
+        //    if (Input.GetButton("Jump"))
+        //        moveVector.y = jumpSpeed;
+        //}
+
+        //moveVector.z = speed;
+        //moveVector.y -= gravity * Time.deltaTime;
+        //controller.Move(moveVector * Time.deltaTime);
+
     }
 
 
@@ -64,13 +91,44 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //called when the player hit something
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    private IEnumerator OnControllerColliderHit(ControllerColliderHit hit)
     {
         //if collide with an obstacles
         if (hit.gameObject.tag == "lethal")
+        {          
+            Instantiate(boomObj, transform.position, boomObj.rotation);           
+                Death();           
+         }       
+
+        if (hit.gameObject.tag == "pit")
         {
             Death();
-        }       
+        }
+        if (hit.gameObject.CompareTag("speed"))
+        {
+            speedFlag = true;
+            //Destroy(hit.gameObject);
+            hit.gameObject.GetComponent<Renderer>().enabled = false;
+            speed += 15.0f;
+            StartCoroutine(ObstaclesDisappear(true));
+            yield return new WaitForSeconds(5);
+            speedFlag = false;
+            speed -= 15.0f;
+        }
+
+        if (hit.gameObject.CompareTag("jump"))
+        {
+            Destroy(hit.gameObject);
+            jumpSpeed = 15.0f;
+            yield return new WaitForSeconds(2);
+            jumpSpeed = 0.0f;
+        }
+
+        if (hit.gameObject.CompareTag("coin"))
+            {         
+            Destroy(hit.gameObject);
+     
+            }
 
     }  
 
@@ -79,5 +137,18 @@ public class PlayerMovement : MonoBehaviour
         isDead = true;
         GetComponent<Score>().OnDeath();
     }
-
+    
+    private IEnumerator ObstaclesDisappear(bool flag)
+    {
+        while (speedFlag)
+        {
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("lethal");
+            foreach (GameObject go in gameObjects)
+            {
+                go.SetActive(!flag);
+            }
+            yield return null;
+        }
+    }
+    
 }

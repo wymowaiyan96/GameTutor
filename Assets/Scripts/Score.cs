@@ -11,6 +11,7 @@ public class Score : MonoBehaviour {
     private int maxDiff = 10;
     private int scoreToNextLev = 10;
     private bool isDead = false;
+    public static int coinTotal = 0;
 
     public DeadMenu deathMenu;
 
@@ -27,8 +28,11 @@ public class Score : MonoBehaviour {
             LevelUP();
         }
         //score is every seconds
-        score += Time.deltaTime * diffLevel;
-       scoreText.text = ((int)score).ToString(); 
+        if (isDead == false)
+        {
+            score += (Time.deltaTime * diffLevel);
+            scoreText.text = ((int)score).ToString();
+        }
     }
 
     //implementing in progress <tuto9>
@@ -54,6 +58,6 @@ public class Score : MonoBehaviour {
             PlayerPrefs.SetFloat("HighScore", score);  //Storing the current score
         }
       
-        deathMenu.ToggleEndMenu(score);
+        deathMenu.ToggleEndMenu(score,coinTotal);
     }
 }

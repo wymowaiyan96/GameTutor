@@ -7,9 +7,12 @@ using UnityEngine.SceneManagement;
 public class DeadMenu : MonoBehaviour {
 
     public Text scoreText;
+   // public Text coinText;
     public Image backgroundImage;
     private bool isShowned = false;
     private float transition = 0.0f;
+
+   
 
 	// Use this for initialization
 	void Start () {
@@ -20,17 +23,20 @@ public class DeadMenu : MonoBehaviour {
 	void Update () {
         if (!isShowned)
             return;
-
+        //animation fade to dark
         transition += Time.deltaTime;
         backgroundImage.color = Color.Lerp(new Color(0, 0, 0, 0), Color.black, transition);
 	}
 
-    public void ToggleEndMenu(float score)
-    {
-        gameObject.SetActive(true);
-        scoreText.text = ((int)score).ToString();
-        isShowned = true;
-    }
+    public void ToggleEndMenu(float score, int coinTotal)
+    {                    
+            gameObject.SetActive(true);
+            scoreText.text = ((int)score).ToString();
+           // coinText.text =  ((int)coinTotal).ToString();
+            isShowned = true;
+            
+     }    
+
 
     public void restartGame()
     {//loading the current scene

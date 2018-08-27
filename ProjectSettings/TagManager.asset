@@ -6,6 +6,10 @@ TagManager:
   tags:
   - lethal
   - Sphere
+  - pit
+  - jump
+  - coin
+  - speed
   layers:
   - Default
   - TransparentFX
