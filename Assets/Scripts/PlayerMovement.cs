@@ -91,40 +91,55 @@ public class PlayerMovement : MonoBehaviour
         {
             Death();
         }
-        if (hit.gameObject.CompareTag("speed"))
+        if (hit.gameObject.CompareTag("speed")) //power-up speed
         {
+            FindObjectOfType<AudioManager>().Play("PowerUpSpeed"); //power-up speed sound effect
             speedFlag = true;
             //Destroy(hit.gameObject);
-            hit.gameObject.GetComponent<Renderer>().enabled = false;
+            //hit.gameObject.GetComponent<Renderer>().enabled = false;
+            hit.gameObject.SetActive(false);
+            float orgSpeed = speed; //save origianl speed for restoration
             speed += 15.0f;
             StartCoroutine(ObstaclesDisappear(true));
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(3);
             speedFlag = false;
-            speed -= 15.0f;
+            speed = orgSpeed;
+
         }
 
-        if (hit.gameObject.CompareTag("jump"))
+        if (hit.gameObject.CompareTag("jump")) //power-up jump
         {
-            Destroy(hit.gameObject);
-            jumpSpeed = 15.0f;
+            FindObjectOfType<AudioManager>().Play("PowerUpJump"); //power-up jump sound effect
+            //hit.gameObject.GetComponent<Renderer>().enabled = false;
+            //Destroy(hit.gameObject); // attempt to fix run backward (MissingReferenceException)
+            hit.gameObject.SetActive(false);
+
+            jumpSpeed = 30.0f;
             yield return new WaitForSeconds(2);
             jumpSpeed = 0.0f;
         }
 
         if (hit.gameObject.CompareTag("coin"))
-            {         
-            Destroy(hit.gameObject);
-     
-            }
+        {
+            FindObjectOfType<AudioManager>().Play("Coin"); //coin sound effect
+            hit.gameObject.SetActive(false);
+            //hit.gameObject.GetComponent<Renderer>().enabled = false;
+            //Destroy(hit.gameObject); // attempt to fix run backward (MissingReferenceException)
+        }
 
-    }  
+    }
 
     private void Death()
     {
         isDead = true;
+        //stop music and sounds
+        FindObjectOfType<AudioManager>().Stop("Coin");
+        FindObjectOfType<AudioManager>().Stop("PowerUpJump");
+        FindObjectOfType<AudioManager>().Stop("Theme");
+        FindObjectOfType<AudioManager>().Play("PlayerDeath"); //play death music
         GetComponent<Score>().OnDeath();
     }
-    
+
     private IEnumerator ObstaclesDisappear(bool flag)
     {
         while (speedFlag)

@@ -41,6 +41,8 @@ public class DeadMenu : MonoBehaviour {
     public void restartGame()
     {//loading the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Replay the background music after restart game
+        FindObjectOfType<AudioManager>().Play("Theme"); 
     }
 
     public void menu()
