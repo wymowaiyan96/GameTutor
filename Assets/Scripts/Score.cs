@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour {
     public float score = 0.0f;
 
-    public Text scoreText;
+    public Text scoreText, highScore;
     private int diffLevel = 1;
     private int maxDiff = 10;
     private int scoreToNextLev = 10;
@@ -20,6 +20,9 @@ public class Score : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //if the state of the player is dead, don't update the score
+
+        highScore.text = "Highscore : " + (int)PlayerPrefs.GetFloat("HighScore");
+
         if (isDead)
             return;
 
@@ -32,6 +35,7 @@ public class Score : MonoBehaviour {
         {
             score += (Time.deltaTime * diffLevel);
             scoreText.text = ((int)score).ToString();
+            
         }
     }
 

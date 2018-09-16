@@ -69,19 +69,6 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(moveVector * Time.deltaTime);
 
 
-        //if (controller.isGrounded)
-        //{
-        //    moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        //    moveVector = transform.TransformDirection(moveVector);
-        //    moveVector *= speed;
-        //    if (Input.GetButton("Jump"))
-        //        moveVector.y = jumpSpeed;
-        //}
-
-        //moveVector.z = speed;
-        //moveVector.y -= gravity * Time.deltaTime;
-        //controller.Move(moveVector * Time.deltaTime);
-
     }
 
 
